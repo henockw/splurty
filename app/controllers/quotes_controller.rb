@@ -8,9 +8,10 @@ class QuotesController < ApplicationController
   end
 
   def create
-    Quote.create(quote_params)
+    
+    @quote = Quote.create(quote_params) 
     if @quote.invalid?
-      flas[:error] = '<strong>Could not saver</strong> the data you entered is invalid.'
+      flash[:error] = '<strong>Could not saver</strong> the data you entered is invalid.'
     end
     redirect_to root_path
   end
@@ -19,10 +20,16 @@ class QuotesController < ApplicationController
   def about
 
   end
-  
+
+  def list
+    @quotes = Quote.all
+  end
+
   private
 
   def quote_params
-    params.require(:quote).permit(:saying, :authour)
+    params.require(:quote).permit(:saying, :author)
   end
 end
+
+
